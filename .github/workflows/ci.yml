@@ -1,0 +1,26 @@
+name: Pruebas Cypress CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-ui:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v4
+
+    - name: Configurar Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+
+    - name: Instalar dependencias
+      run: npm install
+
+    - name: Ejecutar pruebas Cypress
+      run: xvfb-run --auto-servernum --server-args='-screen 0 1280x720x24' npx cypress run --spec "cypress/e2e/cuenta_bancaria.cy.js"
