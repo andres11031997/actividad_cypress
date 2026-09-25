@@ -2,25 +2,30 @@ name: Pruebas Cypress CI
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   test-ui:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout código
-      uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Configurar Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 18
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
 
-    - name: Instalar dependencias
-      run: npm install
+      - name: Instalar dependencias de sistema necesarias
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev \
+          libgconf-2-4 libnss3 libxss1 libasound2 xvfb
 
-    - name: Ejecutar pruebas Cypress
-      run: xvfb-run --auto-servernum --server-args='-screen 0 1280x720x24' npx cypress run --spec "cypress/e2e/cuenta_bancaria.cy.js"
+      - run: npm install
+
+      - name: Correr pruebas Cypress con entorno gráfico simulado (Xvfb)
+        run: xvfb-run --auto-servernum --server-args='-screen 0 1280x720x24' npx cypress run --spec "cypress/e2e/cuenta_bancaria.cy.js"
