@@ -1,4 +1,5 @@
 name: Bank Account Quality Gate
+
 on:
   push:
     branches: [ main ]
@@ -8,14 +9,18 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout del código
-        uses: actions/checkout@v4
-      - name: Configurar Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - name: Instalar dependencias
-        run: npm ci
-      - name: Ejecutar pruebas E2E UI con Cypress
-        run: npx cypress run --spec "cypress/e2e/cuenta_bancaria.cy.js"
+    - name: Checkout del código
+      uses: actions/checkout@v4
+
+    - name: Configurar Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
+    - name: Instalar dependencias
+      run: npm install
+
+    - name: Ejecutar pruebas E2E UI con Cypress
+      run: npx cypress run --spec "cypress/e2e/cuenta_bancaria.cy.js"
