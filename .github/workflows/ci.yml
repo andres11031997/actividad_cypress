@@ -10,24 +10,21 @@ on:
 
 jobs:
   test-ui:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-20.04
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Configurar Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
 
       - name: Instalar dependencias de sistema necesarias
-        run: 
-           sudo apt-get update && sudo apt-get install -y --fix-missing libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 xvfb
-          
-
-
-      - name: Instalar dependencias Node.js y ejecutar pruebas dentro de prueba_cypress
         run: |
-          cd prueba_cypress
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 xvfb
+
+      - name: Instalar dependencias Node.js y ejecutar pruebas Cypress
+        run: |
           npm install
           xvfb-run --auto-servernum --server-args='-screen 0 1280x720x24' npx cypress run --spec "cypress/e2e/cuenta_bancaria.cy.js"
