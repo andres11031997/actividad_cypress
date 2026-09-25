@@ -28,5 +28,9 @@ jobs:
     - name: Instalar dependencias Node.js
       run: npm install
 
+    - name: Instalar Cypress
+      run: npx cypress install
+
     - name: Ejecutar pruebas E2E UI con Cypress
       run: npx cypress run --spec "cypress/e2e/cuenta_bancaria.cy.js"
+
