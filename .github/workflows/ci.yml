@@ -18,4 +18,7 @@ jobs:
 
       - run: npm install
 
+      - name: Instalar Cypress
+        run: npx cypress install
+
       - run: npx cypress run --spec "cypress/e2e/cuenta_bancaria.cy.js"
