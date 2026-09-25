@@ -24,7 +24,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 xvfb
 
-      - name: Instalar dependencias Node.js y ejecutar pruebas Cypress
+      - name: Instalar dependencias de Node.js y ejecutar Cypress
         run: |
           npm install
           xvfb-run --auto-servernum --server-args='-screen 0 1280x720x24' npx cypress run --spec "cypress/e2e/cuenta_bancaria.cy.js"
