@@ -11,26 +11,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout del código
-      uses: actions/checkout@v4
+      - name: Checkout del código
+        uses: actions/checkout@v4
 
-    - name: Configurar Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-    - name: Instalar dependencias del sistema para Cypress
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev \
-        libgconf-2-4 libnss3 libxss1 libasound2 xvfb
+      - name: Instalar dependencias del sistema para Cypress
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev \
+          libgconf-2-4 libnss3 libxss1 libasound2 xvfb
 
-    - name: Instalar dependencias Node.js
-      run: npm install
+      - name: Instalar dependencias Node.js
+        run: npm install
 
-    - name: Instalar Cypress
-      run: npx cypress install
+      - name: Instalar Cypress
+        run: npx cypress install
 
-    - name: Ejecutar pruebas E2E UI con Cypress
-      run: npx cypress run --spec "cypress/e2e/cuenta_bancaria.cy.js"
+      - name: Ejecutar pruebas E2E UI con Cypress con Xvfb
+        run: xvfb-run --auto-servernum --server-args='-screen 0 1280x720x24' npx cypress run --spec "cypress/e2e/cuenta_bancaria.cy.js"
+
 
